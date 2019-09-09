@@ -41,7 +41,6 @@ public class StringUtil {
 			System.out.println("手机号应为11位");
 			return false;
 		}
-		
 		return number.matches(regex);
 	}	
 	
@@ -54,7 +53,7 @@ public class StringUtil {
 		
 		String regex = "[A-z]+[A-z0-9_-]*\\@[A-z0-9]+\\.[A-z]";
 		
-		if (email.length()!=0) {
+		if (email.length()==0) {
 			System.out.println("不能为空");
 			return false;
 		}
