@@ -10,11 +10,21 @@ import java.util.Random;
  */
 public class StringUtil {
 
-	
+	/**
+	 * 
+	 * @param src
+	 * @return
+	 */
 	
 	public static String toHtml(String src) {
 		
-		return null;
+		String str = src.replaceAll(System.getProperty("line.separator"), "|")	;
+		String[] split = str.split("\\|");
+		String newStr="";
+		for (String string2 : split) {
+			newStr+="<p>"+string2+"</p>";
+		}
+		return newStr;
 	}
 	
 	/**
