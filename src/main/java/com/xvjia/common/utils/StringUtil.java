@@ -15,13 +15,14 @@ public class StringUtil {
 	 * @param src
 	 * @return
 	 */
-	
+//	(5)该方法必须是在自己的工具包工程中，且在StringUtil工具中。（2分）
 	public static String toHtml(String src) {
 		
 		String str = src.replaceAll(System.getProperty("line.separator"), "|")	;
 		String[] split = str.split("\\|");
 		String newStr="";
 		for (String string2 : split) {
+//			(2)将\n结尾的这行文本用<p></p>标签包起来。（6分）
 			newStr+="<p>"+string2+"</p>";
 		}
 		return newStr;
@@ -90,6 +91,16 @@ public class StringUtil {
 			e.printStackTrace();
 		}
 		return str;
+	}
+
+	/**
+	 * @param textarea 
+	 * 
+	 */
+	public static void hasText(String textarea) {
+		if (textarea.length()==0) {
+			System.out.println("不能是空字符串");
+		}
 	}
 	
 	
