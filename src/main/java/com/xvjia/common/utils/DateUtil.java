@@ -58,5 +58,14 @@ public class DateUtil {
 		return calendar.getTime();
 	}
 	
+	public static Date getDateByMonthSub(Date date , Integer month) {
+		
+		Calendar calendar = Calendar.getInstance();
+		
+		calendar.setTime(date);
+		calendar.add(calendar.MONTH , -month);
+		
+		return calendar.getTime();
+	}
 	
 }
