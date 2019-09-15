@@ -98,14 +98,12 @@ public class StringUtil {
 	 * 
 	 */
 	public static boolean hasText(String textarea) {
-		System.out.println("hasText"+textarea);
-			if (textarea!=null) {
-				if (textarea.length()!=0) {
-				return true;
-			}
-		}
-		System.out.println("不能爲空");
-		return false;
+//			if (textarea!=null) {
+//				if (textarea.length()!=0) {
+//				return true;
+//			}
+//		}
+		return textarea!=null && textarea.trim().length()>0;
 	}
 	
 	
