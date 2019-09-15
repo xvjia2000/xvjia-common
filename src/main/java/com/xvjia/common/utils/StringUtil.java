@@ -97,10 +97,15 @@ public class StringUtil {
 	 * @param textarea 
 	 * 
 	 */
-	public static void hasText(String textarea) {
-		if (textarea.length()==0) {
-			System.out.println("不能是空字符串");
+	public static boolean hasText(String textarea) {
+		System.out.println("hasText"+textarea);
+			if (textarea!=null) {
+				if (textarea.length()!=0) {
+				return true;
+			}
 		}
+		System.out.println("不能爲空");
+		return false;
 	}
 	
 	

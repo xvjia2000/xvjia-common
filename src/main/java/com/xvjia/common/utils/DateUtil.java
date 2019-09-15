@@ -1,7 +1,10 @@
 package com.xvjia.common.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import org.junit.Test;
 
 /**
  * @author xvjia
@@ -26,11 +29,6 @@ public class DateUtil {
 		
 		return calendar.getTime();
 	}
-	/*
-	 * ����2��(5��) ���ظ���������ĩ ��һ��ʱ����󣬷��ظ�ʱ�������µ������23ʱ59��59�룬��Ҫ�����´���С�Ͷ������������
-	 * ����һ��Date�����ֵ��2019-05-18 11:37:22���򷵻ص�ʱ��Ϊ2019-05-31 23:59:59
-	 * ����һ��Date�����ֵ��2019-02-05 15:42:18���򷵻ص�ʱ��Ϊ2019-02-28 23:59:59
-	 */
 	@SuppressWarnings("static-access")
 	public static Date getDateByFullMonth(Date src) {
 		Calendar calendar = Calendar.getInstance();
@@ -63,9 +61,16 @@ public class DateUtil {
 		Calendar calendar = Calendar.getInstance();
 		
 		calendar.setTime(date);
-		calendar.add(calendar.MONTH , -month);
 		
+		calendar.add(calendar.MONTH , -month);
 		return calendar.getTime();
+	}
+	
+	@Test
+	public void test() {
+		Date dateByMonthSub = getDateByMonthSub(new Date(), 5);
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println(date.format(dateByMonthSub));
 	}
 	
 }

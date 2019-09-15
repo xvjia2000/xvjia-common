@@ -49,4 +49,14 @@ public class StringUtilTest {
 		System.out.println(b);
 	}
 	
+	@Test
+	public void test() {
+		
+		boolean hasText = StringUtil.hasText(null);
+		System.out.println(hasText);
+		
+	}
+	
+	
+	
 }
