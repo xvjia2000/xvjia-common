@@ -1,15 +1,127 @@
 package com.xvjia.common.utils;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * @author xvjia Ê±¼ä2019Äê9ÔÂ6ÈÕ
+ * @author xvjia Ê±ï¿½ï¿½2019ï¿½ï¿½9ï¿½ï¿½6ï¿½ï¿½
  * 
  */
 public class FileUtil {
-	/*
-	 * ·½·¨1£º¸ø¶¨Ò»¸öÎÄ¼şÃû£¬·µ»Ø¸ÃÎÄ¼şÃûµÄÀ©Õ¹Ãû£¬ÀıÈç¡°aaa.jpg¡±£¬·µ»Ø¡°.jpg¡±(3·Ö)
+
+	/**
+	 * åˆ é™¤æ–‡ä»¶æˆ–è€…æ–‡ä»¶å¤¹ï¼Œä½¿ç”¨é€’å½’çš„ç®—æ³•
+	 * 
+	 * @param path
 	 */
+	public static void del(String path) {
+
+		File file = new File(path);
+		// å¦‚æœæ–‡ä»¶ä¸å­˜åœ¨
+		if (!file.exists()) {
+			System.out.println("ä¸å­˜åœ¨è¯¥è·¯å¾„" + path);
+			return;
+		}
+
+		// å¦‚æœæ˜¯æ–‡ä»¶ åˆ™åˆ é™¤
+		if (file.isFile()) {
+			System.out.println("åˆ é™¤ æ–‡ä»¶  " + path);
+			file.delete();
+		}
+		// å¦‚æœæ˜¯æ–‡ä»¶å¤¹ åˆ™é€’å½’è°ƒç”¨è‡ªå·±
+		if (file.isDirectory()) {
+			String[] list = file.list();
+			for (int i = 0; i < list.length; i++) {
+				String subFileName = path + "\\" + list[i];
+				del(subFileName);
+			}
+			System.out.println("åˆ é™¤ç›®å½•  " + path);
+			file.delete();
+		}
+
+	}
+
+	/**
+	 * æ‹·è´æ–‡ä»¶
+	 * 
+	 * @param src æºæ–‡ä»¶
+	 * @param dst ç›®æ ‡æ–‡ä»¶
+	 * @throws IOException
+	 */
+	public static void copy(String src, String dst) throws IOException {
+		File fileSrc = new File(src);
+		if (!fileSrc.exists() || !fileSrc.isFile()) {
+			System.out.println(src + " æ–‡ä»¶ä¸å­˜åœ¨ï¼Œä¸èƒ½å¤åˆ¶å•Šï¼");
+			return;
+		}
+
+		File fileDst = new File(dst);
+		if (fileDst.exists()) {
+			System.out.println("ç›®æ ‡æ–‡ä»¶å·²ç»å­˜åœ¨ï¼Œä¸èƒ½å¤åˆ¶");
+		}
+
+		// è·å–è¾“å…¥æµ
+		FileInputStream fis = new FileInputStream(fileSrc);
+		FileOutputStream fos = new FileOutputStream(fileDst);
+
+		byte bs[] = new byte[1024];
+		while (fis.read(bs) >= 0) {
+			fos.write(bs);
+		}
+
+		/*
+		 * fis.close(); fos.close();
+		 */
+		// è°ƒç”¨æµå·¥å…·ç±» å»å…³é—­æµ
+		StreamUtils.closeStream(fis, fos);
+	}
+
+	/**
+	 * 
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
+	public static String readFileByLine(String fileName) throws IOException {
+
+		StringBuilder sb = new StringBuilder();
+		File file = new File(fileName);
+		FileInputStream fis = new FileInputStream(file);
+		InputStreamReader reader = new InputStreamReader(fis);
+		BufferedReader bufferedReader = new BufferedReader(reader);
+		String str = null;
+		while ((str = bufferedReader.readLine()) != null) {
+			sb.append(str).append("\r\n");// è¿½åŠ 
+		}
+		// å…³é—­æµ
+		StreamUtils.closeStream(fis);
+		return sb.toString();
+
+	}
+
+	public static List<String> readFile(String fileName) throws IOException {
+
+		List<String> strList = new ArrayList();
+		File file = new File(fileName);
+		FileInputStream fis = new FileInputStream(file);
+		InputStreamReader reader = new InputStreamReader(fis);
+		BufferedReader bufferedReader = new BufferedReader(reader);
+		String str = null;
+		while ((str = bufferedReader.readLine()) != null) {
+			strList.add(str);
+		}
+		// å…³é—­æµ
+		StreamUtils.closeStream(fis);
+		return strList;
+
+	}
+
 	/// String str="aaa.jpg"
 	public static String getExtendName(String fileName) {
 		if (null != fileName && fileName.length() > 0)
@@ -18,7 +130,7 @@ public class FileUtil {
 	}
 
 	/*
-	 * ·½·¨2£º·µ»Ø²Ù×÷ÏµÍ³ÁÙÊ±Ä¿Â¼(5·Ö)
+	 * ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½ÏµÍ³ï¿½ï¿½Ê±Ä¿Â¼(5ï¿½ï¿½)
 	 */
 	public static File getTempDirectory() {
 		String path = System.getProperty("java.io.tmpdir");
@@ -27,7 +139,8 @@ public class FileUtil {
 	}
 
 	/*
-	 * ·½·¨3£º·µ»Ø²Ù×÷ÏµÍ³ÓÃ»§Ä¿Â¼(5·Ö) ÀıÈçLinuxÏµÍ³ÊÇÔÚ/home/{ÓÃ»§ÕËºÅÃû}£¬WindowsÏµÍ³ÊÇÔÚC:\Users\{ÓÃ»§ÕËºÅÃû}>
+	 * ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½ÏµÍ³ï¿½Ã»ï¿½Ä¿Â¼(5ï¿½ï¿½)
+	 * ï¿½ï¿½ï¿½ï¿½LinuxÏµÍ³ï¿½ï¿½ï¿½ï¿½/home/{ï¿½Ã»ï¿½ï¿½Ëºï¿½ï¿½ï¿½}ï¿½ï¿½WindowsÏµÍ³ï¿½ï¿½ï¿½ï¿½C:\Users\{ï¿½Ã»ï¿½ï¿½Ëºï¿½ï¿½ï¿½}>
 	 */
 	public static File getUserDirectory() {
 
